@@ -8,33 +8,69 @@ const connection = mysql.createConnection({
     password: '',
     database: 'EmployeeTracker'
 });
+connection.connect((err) => {
+  if (err) throw err;
+  console.log(`connected as id ${connection.threadId}\n`);
+  startPrompt();
+});
 
 // function which prompts the user for what action they should take
-function startPromt () {
+function startPrompt () {
     inquirer
       .prompt({
         name: 'start',
         type: 'list',
-        message: 'What would you like to do?',
+        message: 'Welcome! What would you like to do?',
         choices: ['View all employees',
-                  'View all employees by department',
-                  'View all employees by manager',
+                  'View department',
+                  'View role',
                   'Add employee',
-                  'Remove employee',
+                  'Add department',
+                  'Add role',
                   'Update employee role',
-                  'Update manager role',
-                  'View all roles',
+                  'Remove employee',
+                  'Remove role',
                   'EXIT'
     ],
       })
-      .then((answer) => {
-        // based on their answer, either call the bid or the post functions
-        if (answer.postOrBid === 'POST') {
-          postAuction();
-        } else if (answer.postOrBid === 'BID') {
-          bidAuction();
-        } else {
-          connection.end();
-        }
-      });
-  };
+      .then(function (result) {
+        // based on their answer, switch statement
+        switch(res.start) {
+          case 'View All Employees':
+              viewEmployees();
+              break;
+          case 'View Department':
+              viewDepartment();
+              break;
+          case 'View Role':
+              viewRole();
+              break;
+          case 'Add Employee':
+              addEmployee();
+              break;
+          case 'Add Department':
+              addDepartment();
+              break;
+          case 'Add Role':
+              addRole();
+              break;
+          case 'Update Employee Role':
+              updateEmployeeRole();
+              break;
+          case 'Remove Department':
+              removeDepartment();
+              break;
+          case 'Remove Role':
+              removeRole();
+              break;
+          case 'EXIT':
+              exitPrompt();
+              break;
+          }
+      })
+  }
+
+  const viewEmployees = () => {
+    connection.query()
+
+  }
