@@ -27,4 +27,28 @@ CREATE TABLE employee (
   PRIMARY KEY(id)
 );
 
+USE employeeTracker_DB;
+INSERT INTO department (name)
+VALUES ("Management"), 
+("HumanResources"), 
+("Sales"), 
+("Finance"),
+("Marketing");
 
+INSERT INTO role (title, salary, department_id)
+VALUES ("Manager", 80000.00, 1), 
+("Supervisor", 70000.00, 2), 
+("SalesRepresentative", 60000.00, 3), 
+("CustomerServiceRepresentative", 50000.00, 4), 
+("Receptionist", 42000.00, 5);
+
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("Seymore", "Butz", 1, 1);
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("Phil", "McGroin", 2, NULL);
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("Oliver", "Closeoff", 3, NULL);
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("Hugh", "Jass", 4, NULL);
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES("Mike", "Rotch", 5, NULL);

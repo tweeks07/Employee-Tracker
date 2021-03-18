@@ -1,12 +1,13 @@
-const mysql = require('mysql');
-const inquirer = require('inquirer');
+const mysql = require("mysql");
+const inquirer = require("inquirer");
+require("console.table");
 
 const connection = mysql.createConnection({
     host: 'localhost',
     port: 3306,
     user: 'root',
     password: '',
-    database: 'EmployeeTracker'
+    database: 'employeeTracker_DB'
 });
 connection.connect((err) => {
   if (err) throw err;
@@ -21,32 +22,23 @@ function startPrompt () {
         name: 'start',
         type: 'list',
         message: 'Welcome! What would you like to do?',
-        choices: ['View all employees',
-                  'View department',
-                  'View role',
-                  'Add employee',
+        choices: ['Add employee',
                   'Add department',
                   'Add role',
+                  'View employee',
+                  'View department',
+                  'View role',
                   'Update employee role',
                   'Remove employee',
                   'Remove role',
                   'EXIT'
     ],
       })
-      .then(function (result) {
+      .then(function (res) {
         // based on their answer, switch statement
         switch(res.start) {
-          case 'View All Employees':
-              viewEmployees();
-              break;
-          case 'View Department':
-              viewDepartment();
-              break;
-          case 'View Role':
-              viewRole();
-              break;
-          case 'Add Employee':
-              addEmployee();
+          case 'Add Employees':
+              addEmployees();
               break;
           case 'Add Department':
               addDepartment();
@@ -54,8 +46,14 @@ function startPrompt () {
           case 'Add Role':
               addRole();
               break;
-          case 'Update Employee Role':
-              updateEmployeeRole();
+          case 'View Employee':
+              viewEmployee();
+              break;
+          case 'View Department':
+              viewDepartment();
+              break;
+          case 'View Role':
+              viewRole();
               break;
           case 'Remove Department':
               removeDepartment();
@@ -63,14 +61,58 @@ function startPrompt () {
           case 'Remove Role':
               removeRole();
               break;
+          case 'Update Employee Role':
+              updateEmployeeRole();
+              break;
           case 'EXIT':
               exitPrompt();
               break;
           }
-      })
+      });
   }
 
-  const viewEmployees = () => {
+  function addEmployees () {
+    
+  }
+ 
+  function addDepartment () {
+  
+
+  }
+  
+  function addRole () {
+
+  }
+
+  const viewEmployee = () => {
+    connection.query('SELECT * FROM employees', (err,res) => {
+      if(err) throw err;
+      console.table(res);
+      startPrompt();
+    });
+  };
+
+  const viewDepartment = () => {
+    connection.query('SELECT * FROM department', function (err, res) {
+      if (err) throw err;
+      console.table(res);
+      startPrompt();
+    });
+  }
+
+  const viewRole = () => {
+    connection.query('SELECT * FROM role', function (err, res) {
+      if (err) throw err;
+      console.table(res);
+      startPrompt();
+    });
+  }
+
+  const updateEmployeeRole = () => {
     connection.query()
-
   }
+
+  function exitPrompt() {
+    connection.end();
+    process.exit();
+  };
