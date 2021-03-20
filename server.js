@@ -22,12 +22,12 @@ function startPrompt () {
         name: 'start',
         type: 'list',
         message: 'Welcome! What would you like to do?',
-        choices: ['Add employee',
-                  'Add department',
-                  'Add role',
-                  'View employee',
+        choices: ['View employee',
                   'View department',
                   'View role',
+                  'Add employee',
+                  'Add department',
+                  'Add role',
                   'Update employee role',
                   'Remove employee',
                   'Remove role',
@@ -37,15 +37,6 @@ function startPrompt () {
       .then(function (res) {
         // based on their answer, switch statement
         switch(res.start) {
-          case 'Add Employees':
-              addEmployees();
-              break;
-          case 'Add Department':
-              addDepartment();
-              break;
-          case 'Add Role':
-              addRole();
-              break;
           case 'View Employee':
               viewEmployee();
               break;
@@ -55,14 +46,23 @@ function startPrompt () {
           case 'View Role':
               viewRole();
               break;
-          case 'Remove Department':
-              removeDepartment();
+          case 'Add Employee':
+              addEmployee();
               break;
-          case 'Remove Role':
-              removeRole();
+          case 'Add Department':
+              addDepartment();
+              break;
+          case 'Add Role':
+              addRole();
               break;
           case 'Update Employee Role':
               updateEmployeeRole();
+              break;
+          case 'Remove Employee':
+              removeEmployee();
+              break;
+          case 'Remove Role':
+              removeRole();
               break;
           case 'EXIT':
               exitPrompt();
@@ -71,7 +71,12 @@ function startPrompt () {
       });
   }
 
-  function addEmployees () {
+  function viewEmployee() {
+    connection.query("SELECT * FROM employee", function (err, res) {
+      if (err) throw err;
+      console.table(res);
+      startPrompt();
+    });
     
   }
  
@@ -83,14 +88,6 @@ function startPrompt () {
   function addRole () {
 
   }
-
-  const viewEmployee = () => {
-    connection.query('SELECT * FROM employees', (err,res) => {
-      if(err) throw err;
-      console.table(res);
-      startPrompt();
-    });
-  };
 
   const viewDepartment = () => {
     connection.query('SELECT * FROM department', function (err, res) {
